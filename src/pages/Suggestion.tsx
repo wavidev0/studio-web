@@ -63,7 +63,7 @@ const Suggestion = () => {
       ),
     },
     {
-      Header: "Doctor Name",
+      Header: "Studio Name",
       Cell: ({ row }: { row: suggestion }) => (
         <span className="text-capitalize fw-bold">{row?.doctor?.name}</span>
       ),
@@ -92,7 +92,7 @@ const Suggestion = () => {
       ),
     },
     {
-      Header: "Doctor Name",
+      Header: "Studio Name",
       Cell: ({ row }: { row: suggestion }) => (
         <span className="text-capitalize fw-bold">{row?.user?.name}</span>
       ),
@@ -137,7 +137,7 @@ const Suggestion = () => {
           className={`${type === 1 ? "activeBtn" : "disabledBtn"} ms-1`}
           onClick={() => setType(1)}
         >
-          Doctor
+          Studio
         </button>
       </div>
       <div>

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import moment from "moment";
 import { useState } from "react";
-import DateRangePicker from "react-bootstrap-daterangepicker";
+// import DateRangePicker from "react-bootstrap-daterangepicker";
 
 export default function Analytics(props: any) {
   const {
@@ -58,7 +58,7 @@ export default function Analytics(props: any) {
       className="d-flex my-2"
       style={{ width: "300px", justifyContent: direction }}
     >
-      <DateRangePicker
+      {/* <DateRangePicker
         initialSettings={{
           ranges: {
             ...(allAllow !== false && {
@@ -123,7 +123,7 @@ export default function Analytics(props: any) {
             marginTop: "-3px",
           }}
         />
-      </DateRangePicker>
+      </DateRangePicker> */}
     </div>
   );
 }

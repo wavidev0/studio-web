@@ -92,7 +92,7 @@ const Dashboard = () => {
     },
 
     {
-      Header: "Doctor Earnings"
+      Header: "Studio Earnings"
       ,
       Cell: ({ row }: { row: topDoctorData }) => (
         <span className="fw-bold">{row?.doctorEarning}</span>
@@ -139,7 +139,7 @@ const Dashboard = () => {
       ),
     },
     {
-      Header: "Doctor",
+      Header: "Studio",
       thClass: "text-nowrap",
       Cell: ({ row }: { row: any }) => (
         <span className="text-nowrap">{row?.doctor?.name}</span>
@@ -423,7 +423,7 @@ const Dashboard = () => {
               </>
             ) : (
               <DashBox
-                title="TOTAL DOCTORS"
+                title="TOTAL STUDIOS"
                 dashSVG={
                   <svg
                     width="42"
@@ -567,7 +567,7 @@ const Dashboard = () => {
               </>
             ) : (
               <DashBox
-                title="DOCTOR EARNINGS"
+                title="STUDIO EARNINGS"
                 dashSVG={
                   <svg
                     width="60"
@@ -745,7 +745,7 @@ const Dashboard = () => {
       <div className="row bg-white">
         <div className="col-lg-6 col-md-12 ">
           <div className="m40-top tsBox p-3 br-2">
-            <h5 className="text-center text-theme">TOP DOCTORS</h5>
+            <h5 className="text-center text-theme">TOP STUDIOS</h5>
             <Table
               data={dashboard?.topDoctors}
               mapData={topDoctorData}

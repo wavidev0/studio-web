@@ -34,7 +34,7 @@ const Complain = () => {
             } ms-1`}
             onClick={() => setType("doctor")}
           >
-            Doctor
+            Studio
           </button>
         </div>
 

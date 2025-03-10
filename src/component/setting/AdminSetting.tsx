@@ -365,7 +365,7 @@ const AdminSetting = () => {
                   type={`text`}
                   id={`minWithdraw`}
                   name={`minWithdraw`}
-                  label={`Minwithdraw (Doctor)`}
+                  label={`Minwithdraw (Studio)`}
                   placeholder={`minWithdraw`}
                   errorMessage={error.minWithdrawText && error.minWithdrawText}
                   value={minWithdrawText}

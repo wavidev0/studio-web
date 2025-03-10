@@ -102,7 +102,7 @@ const DoctorBooking = () => {
             <img
               src={row?.user?.image}
               style={{ width: "70px", height: "70px" }}
-              alt={`Doctor ${page * rowsPerPage + index + 1}`}
+              alt={`Studio ${page * rowsPerPage + index + 1}`}
             />
           </div>
         </div>
@@ -119,7 +119,7 @@ const DoctorBooking = () => {
     },
 
     {
-      Header: "Doctor",
+      Header: "Studio",
       Cell: ({ row }: { row: bookingData }) => (
         <span className="text-capitalize fw-bold cursor">
           {row?.doctor?.name}

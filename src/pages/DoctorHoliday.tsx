@@ -56,7 +56,7 @@ export const DoctorHoliday = () => {
       ),
     },
     {
-      Header: "Doctor Name",
+      Header: "Studio Name",
       Cell: ({ row }: { row: doctorHoliday }) => (
         <span className="text-capitalize fw-bold">{row?.doctor?.name}</span>
       ),

@@ -83,7 +83,7 @@ const PendingRequestDialog = () => {
             <div className="mainDiaogBox">
               <div className="row justify-content-between align-items-center formHead">
                 <div className="col-8">
-                  <h4 className="text-theme m0">Doctor Details</h4>
+                  <h4 className="text-theme m0">Studio Details</h4>
                 </div>
                 <div className="col-4">
                   <div
@@ -349,7 +349,7 @@ const PendingRequestDialog = () => {
                         name={`Type`}
                         label={`Type`}
                         placeholder={`Type`}
-                        value={"Doctor"}
+                        value={"Studio"}
                         disabled
                       />
                     </div>

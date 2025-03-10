@@ -64,7 +64,7 @@ const Review = () => {
       ),
     },
     {
-      Header: "Doctor",
+      Header: "Studio",
       Cell: ({ row }: { row: reviewData }) => (
         <span className="text-capitalize fw-bold">{row?.doctor}</span>
       ),

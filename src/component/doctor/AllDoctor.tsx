@@ -72,7 +72,7 @@ const AllDoctor = () => {
     if (row?.name !== "Dr. M.d.batt") {
       dispatch(blockDoctor(row?._id));
     } else {
-      DangerRight("This is a Demo Doctor You Can Not Update");
+      DangerRight("This is a Demo Studio You Can Not Update");
     }
   };
 
@@ -91,7 +91,7 @@ const AllDoctor = () => {
             src={row?.image}
             width="70px"
             height="70px"
-            alt={`Doctor ${page * rowsPerPage + index + 1}`}
+            alt={`Studio ${page * rowsPerPage + index + 1}`}
           />
         </div>
       ),

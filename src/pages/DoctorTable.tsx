@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 const DoctorTable = () => {
   const { dialogueType } = useSelector((state: RootStore) => state.dialogue);
-
+console.log(dialogueType)
   const dispatch = useAppDispatch();
   const [search, setSearch] = useState<string | undefined>("ALL");
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -25,7 +25,7 @@ const DoctorTable = () => {
           dialogueType === "doctor" ? "d-none" : "d-block"
         }`}
       >
-        <Title name="Doctors" />
+        <Title name="Studios" />
 
         <div
           className="my-2"
@@ -41,7 +41,7 @@ const DoctorTable = () => {
             className={`${type === "doctor" ? "activeBtn" : "disabledBtn"}`}
             onClick={() => setType("doctor")}
           >
-            All Doctors
+            All Studios
           </button>
           <button
             type="button"

@@ -15,6 +15,7 @@ interface UserState {
   doctorVideo: [];
   videoComments: [];
   doctorProfile: any;
+  studioAddon: any;
   isLoading: boolean;
   isSkeleton: boolean;
   total: number;
@@ -34,6 +35,7 @@ const initialState: UserState = {
   doctorVideo: [],
   videoComments: [],
   doctorProfile: {},
+  studioAddon: [],
   isLoading: false,
   isSkeleton: false,
 };
@@ -103,6 +105,51 @@ export const updateDoctor = createAsyncThunk(
     return axios.patch(
       `admin/doctor/updateProfile?doctorId=${payload?.doctorId}`,
       payload?.data
+    );
+  }
+);
+
+// addon api's
+export const addonCreate = createAsyncThunk(
+  "doctor/addon/",
+  async (
+    payload:
+      | {
+          addonName: string;
+          description?: string;
+          price: number;
+          quantity: number;
+          addonImage: string;
+          doctorId: string;
+        }
+      | undefined
+  ) => {
+    return axios.post("doctor/addon/", payload);
+  }
+);
+export const updateAddon = createAsyncThunk(
+  "doctor/addon/update",
+  async ({ id, formData }) => {
+    // Check if the id is passed correctly
+    console.log("Received ID:", id);
+    console.log("FormData:", formData);
+
+    // Perform the PUT request with FormData and the correct id in the URL
+    return apiInstance.put(`doctor/addon/update/${id}`, formData); // Send FormData with id in the URL
+  }
+);
+
+export const deleteAddon = createAsyncThunk(
+  "doctor/addon/delete",
+  async (payload) => {
+    return apiInstance.delete(`doctor/addon/delete/${payload}`);
+  }
+);
+export const getAllAddon = createAsyncThunk(
+  "doctor/addon/getaddons",
+  async (payload: AllUsersPayload | undefined) => {
+    return apiInstanceFetch.get(
+      `doctor/addon/getaddons?start=${payload?.start}&limit=${payload?.limit}&search=${payload?.search}`
     );
   }
 );
@@ -177,7 +224,6 @@ export const getParticularDoctorEarning = createAsyncThunk(
 export const doctorActionAccepted = createAsyncThunk(
   "admin/doctorRequest/accept",
   async (payload: AllUsersPayload | undefined) => {
-    ;
     return apiInstance.post(`admin/doctorRequest/accept?requestId=${payload}`);
   }
 );
@@ -221,6 +267,54 @@ const doctorSlice = createSlice({
     builder.addCase(getDoctorProfile.fulfilled, (state, action) => {
       state.isLoading = false;
       state.doctorProfile = action?.payload?.data;
+    });
+    // addons
+    builder.addCase(getAllAddon.fulfilled, (state, action) => {
+      console.log("getAllAddon fulfilled payload:", action.payload); // Log the full payload
+      console.log("Extracted addons:", action?.payload?.addons); // Log the addons specifically
+
+      state.isLoading = false;
+      state.studioAddon = action?.payload?.addons;
+      state.total = action.payload.total;
+    });
+
+    builder.addCase(addonCreate.fulfilled, (state, action) => {
+      state.isLoading = false; // Set loading to false once
+
+      if (action.payload.status == 200 || action.payload.status == 201) {
+        Success("Addons Created Successfully");
+      } else if (action.payload.status == 400 || action.payload.status == 500) {
+        DangerRight("Addon with this name already exists for the studio");
+      } else {
+        DangerRight("Failed to create Addon");
+      }
+    });
+
+    builder.addCase(updateAddon.fulfilled, (state, action) => {
+      state.isLoading = false; // Set loading to false once
+
+      if (action.payload.status == 200 || action.payload.status == 201) {
+        Success("Addons Updated Successfully");
+      } else if (action.payload.status == 400) {
+        DangerRight("Addon with this name already exists for the studio");
+      } else if (action.payload.status == 404) {
+        DangerRight("Addon not found");
+      } else {
+        DangerRight("Failed to update Addon");
+      }
+    });
+    builder.addCase(deleteAddon.fulfilled, (state, action) => {
+      state.isLoading = false; // Set loading to false once
+
+      if (action.payload.status == 200 || action.payload.status == 201) {
+        Success("Addons Deleted Successfully");
+      } else if (action.payload.status == 400 || action.payload.status == 500) {
+        DangerRight("Failed to delete Addon");
+      } else if (action.payload.status == 404) {
+        DangerRight("Addon not found");
+      } else {
+        DangerRight("Failed to delete Addon");
+      }
     });
 
     builder.addCase(getDoctorProfile.rejected, (state, action) => {
@@ -281,7 +375,6 @@ const doctorSlice = createSlice({
         (doctor) => doctor?._id === action?.meta?.arg
       );
       if (index !== -1) {
-        ;
         const removedDoctor = state.doctorPendingRequest[index];
         state.doctorPendingRequest?.splice(index, 1);
       }
@@ -297,7 +390,7 @@ const doctorSlice = createSlice({
       );
       state?.doctorRejectedRequest?.unshift(action?.payload?.doctor);
 
-      Success("Doctor Request Declined Succesfully");
+      Success("Studio Request Declined Succesfully");
     });
 
     builder.addCase(
@@ -318,9 +411,9 @@ const doctorSlice = createSlice({
           }
 
           state.doctorProfile = action.payload.doctor;
-          Success("Doctor Update Successfully");
+          Success("Studio Update Successfully");
         } else {
-          DangerRight("This is a Demo Doctor You Can Not Update");
+          DangerRight("This is a Demo Studio You Can Not Update");
         }
         state.isLoading = false;
       }
@@ -347,8 +440,8 @@ const doctorSlice = createSlice({
           };
         }
         action.payload.data?.isBlock === true
-          ? setToast("success", "Doctor Block Successfully")
-          : setToast("success", "Doctor Unblock Successfully");
+          ? setToast("success", "Studio Block Successfully")
+          : setToast("success", "Studio Unblock Successfully");
       }
       state.isLoading = false;
     });
@@ -365,7 +458,7 @@ const doctorSlice = createSlice({
         state.doctor = state.doctor.filter(
           (doctor) => doctor._id !== action?.meta?.arg
         );
-        setToast("success", "Doctor Delete Successfully");
+        setToast("success", "Studio Delete Successfully");
       }
       state.isLoading = false;
     });

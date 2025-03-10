@@ -110,7 +110,7 @@ const Attendence = () => {
       ),
     },
     {
-      Header: "Doctor Name",
+      Header: "Studio Name",
       Cell: ({ row }) => (
         <span
           className="text-capitalize fw-bold cursor"
@@ -162,7 +162,7 @@ const Attendence = () => {
             </div>
             <div className="inputData ms-4">
               <label className="styleForTitle" htmlFor="bookingType">
-                Doctor
+                Studio
               </label>
               <select
                 name="bookingType"

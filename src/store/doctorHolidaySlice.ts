@@ -73,7 +73,7 @@ export const deleteDoctorHoliday = createAsyncThunk(
               state.doctorHoliday = state.doctorHoliday.filter(
                 (doctor : any) => doctor._id !== action?.meta?.arg
               );
-              setToast("success", "Doctor Holiday Delete Successfully");
+              setToast("success", "Studio Holiday Delete Successfully");
             }
             state.isLoading = false;
           });

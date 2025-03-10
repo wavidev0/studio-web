@@ -42,7 +42,7 @@ const AcceptedRequest = () => {
       Header: "Image",
       Cell: ({ row }) => (
         <div className="userProfile">
-          <img src={row?.image} width="70px" height="70px" alt={`Doctor`} />
+          <img src={row?.image} width="70px" height="70px" alt={`Studio`} />
         </div>
       ),
     },

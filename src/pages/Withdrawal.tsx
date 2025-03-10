@@ -83,7 +83,7 @@ export default function Withdrawal() {
       ),
     },
     {
-      Header: "Doctor Name",
+      Header: "Studio Name",
       Cell: ({ row }: { row: withdrawal }) => (
         <span className="text-capitalize fw-bold">{row?.doctor?.name}</span>
       ),

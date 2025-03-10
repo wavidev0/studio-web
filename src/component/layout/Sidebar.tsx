@@ -7,6 +7,7 @@ import Image from "next/image";
 import $ from "jquery";
 import { useSelector } from "react-redux";
 import { RootStore } from "@/store/store";
+import { SiReasonstudios } from "react-icons/si";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -128,34 +129,36 @@ const Sidebar = () => {
 
   const array2 = [
     {
-      name: "Doctor",
+      name: "Studio",
       path: "/DoctorTable",
-      subPath : "/DoctorProfile",
-      subPath1 : "/doctor/DoctorEarning",
-      subPath2 : "/doctor/DoctorBooking",
+      subPath: "/DoctorProfile",
+      subPath1: "/doctor/DoctorEarning",
+      subPath2: "/doctor/DoctorBooking",
       navSVG: (
-        <svg
-          width="25"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M3 9.01131V21C3 21.5523 3.44772 22 4 22H8.5C9.05228 22 9.5 21.5523 9.5 21V16.5H14.5V21C14.5 21.5523 14.9477 22 15.5 22H20C20.5523 22 21 21.5523 21 21V9.01131C21 8.69021 20.8458 8.38864 20.5855 8.20063L12 2L3.41451 8.20063C3.1542 8.38864 3 8.69021 3 9.01131Z"
-            stroke="#818185"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M12 7.5V12.5M9.5 10H14.5"
-            stroke="#818185"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <SiReasonstudios style={{width:"20px",height:"20px",color:"#3b436f"}}/>
+
+        // <svg
+        //   width="25"
+        //   height="24"
+        //   viewBox="0 0 24 24"
+        //   fill="none"
+        //   xmlns="http://www.w3.org/2000/svg"
+        // >
+        //   <path
+        //     d="M3 9.01131V21C3 21.5523 3.44772 22 4 22H8.5C9.05228 22 9.5 21.5523 9.5 21V16.5H14.5V21C14.5 21.5523 14.9477 22 15.5 22H20C20.5523 22 21 21.5523 21 21V9.01131C21 8.69021 20.8458 8.38864 20.5855 8.20063L12 2L3.41451 8.20063C3.1542 8.38864 3 8.69021 3 9.01131Z"
+        //     stroke="#818185"
+        //     stroke-width="2"
+        //     stroke-linecap="round"
+        //     stroke-linejoin="round"
+        //   />
+        //   <path
+        //     d="M12 7.5V12.5M9.5 10H14.5"
+        //     stroke="#818185"
+        //     stroke-width="2"
+        //     stroke-linecap="round"
+        //     stroke-linejoin="round"
+        //   />
+        // </svg>
       ),
       onClick: handleOnClick,
     },
@@ -163,8 +166,8 @@ const Sidebar = () => {
     {
       name: "Customer",
       path: "/User",
-      subPath : "/UserBooking",
-      subPath1 : "/UserProfile",
+      subPath: "/UserBooking",
+      subPath1: "/UserProfile",
       navSVG: (
         <svg
           width="25"
@@ -467,7 +470,7 @@ const Sidebar = () => {
   ];
   const array5 = [
     {
-      name: "Doctor Holiday",
+      name: "Studio Holiday",
       path: "/DoctorHoliday",
       navSVG: (
         <svg
@@ -559,13 +562,20 @@ const Sidebar = () => {
             <div className="logo d-flex justify-content-center">
               {/* <img src={Logo} alt="logo" /> */}
               <div style={{ width: "50px" }}>
-                <Image src={logo} width={50} height={50} alt="" />
+                {/* <img
+                  width="64"
+                  height="64"
+                  src="https://img.icons8.com/external-bearicons-glyph-bearicons/64/external-Studio-podcast-bearicons-glyph-bearicons.png"
+                  alt="external-Studio-podcast-bearicons-glyph-bearicons"
+                /> */}
+                {/* <Image src={logo} width={50} height={50} alt="" /> */}
+                <SiReasonstudios style={{width:"40px",height:"40px",color:"#3b436f"}}/>
               </div>
               <h3
                 className="cursor text-nowrap mb-0 ms-3"
                 // onClick={() => router("/admin/adminDashboard")}
               >
-                Doctor
+                Studio
               </h3>
             </div>
             {/* <div className="smallLogo">
@@ -614,15 +624,14 @@ const Sidebar = () => {
                 <p className="navTitle">User</p>
 
                 {array2.map((res: any, i: any) => {
-             
                   return (
                     <>
                       <Navigator
                         name={res?.name}
                         path={res?.path}
                         subPath={res?.subPath}
-                        subPath1 = {res?.subPath1}
-                        subPath2 = {res?.subPath2}
+                        subPath1={res?.subPath1}
+                        subPath2={res?.subPath2}
                         navIcon={res?.navIcon}
                         navSVG={res?.navSVG}
                         onClick={res?.onClick && res?.onClick}

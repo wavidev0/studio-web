@@ -63,7 +63,7 @@ export default function monthlyReport() {
     },
 
     {
-      Header: "Total Doctor",
+      Header: "Total Studio",
       Cell: ({ row }: { row: monthlyReport }) => (
         <span className="text-capitalize fw-bold cursor">{row?.doctors}</span>
       ),
@@ -85,7 +85,7 @@ export default function monthlyReport() {
     },
 
     {
-      Header: `Doctor Earning ${setting?.currencySymbol}`,
+      Header: `Studio Earning ${setting?.currencySymbol}`,
       Cell: ({ row }: { row: monthlyReport }) => (
         <span className="text-capitalize fw-bold cursor">
           {row?.doctorEarning}

@@ -221,14 +221,14 @@ const AddDoctor = () => {
 
   return (
     <div className="p-3">
-      <Title name={`Update doctor`} />
+      <Title name={`Update studio`} />
       <div className="card">
         <div className="card-body">
           <div className="">
             <div className="row align-items-start formBody">
               <div className="col-12">
                 <h2 className="fw-bolder mb-0" style={{ fontSize: "22px" }}>
-                  Doctor information
+                  Studio information
                 </h2>
               </div>
               <div className="col-12 col-md-6 col-lg-4">
@@ -449,7 +449,7 @@ const AddDoctor = () => {
                   }}
                 />
               </div>
-              {dialogueData.type !== 2 && (
+              {dialogueData?.type !== 2 && (
                 <div className="col-12 col-md-6 col-lg-4">
                   <ExInput
                     type={`text`}

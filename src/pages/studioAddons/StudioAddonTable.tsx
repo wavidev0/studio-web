@@ -1,104 +1,135 @@
-import BannerDialogue from "@/component/banner/BannerDialogue";
-import RootLayout from "@/component/layout/Layout";
-import Button from "@/extra/Button";
 import Pagination from "@/extra/Pagination";
 import Table from "@/extra/Table";
-import Title from "@/extra/Title";
-import ToggleSwitch from "@/extra/TogggleSwitch";
-import { activeBanner, deleteBanner, getBanner } from "@/store/bannerSlice";
-import { openDialog } from "@/store/dialogSlice";
 import { RootStore, useAppDispatch } from "@/store/store";
-import {  warning } from "@/utils/Alert";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import StudioAddonsForm from "./StudioAddonsForm";
+import { Button } from "@mui/material";
+import StudioAddonsEditForm from "./StudioAddonEditForm";
+import { deleteAddon, getAllAddon } from "@/store/doctorSlice";
+import { warning } from "@/utils/Alert";
 
-interface BannerData {
-  _id: string;
-  image: string;
-  isActive: false;
-}
-
-const Banner = () => {
-  const { dialogue, dialogueType } = useSelector(
-    (state: RootStore) => state.dialogue
-  );
- 
-
-  const { banner } = useSelector((state: RootStore) => state.banner);
-  const router = useRouter();
-
+const AddonsTable = () => {
+  const { setting }: any = useSelector((state: RootStore) => state?.setting);
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { dialogueType } = useSelector((state: RootStore) => state.dialogue);
 
-  const [data, setData] = useState<any[]>([]);
+  const [search, setSearch] = useState<string | undefined>("ALL");
   const [rowsPerPage, setRowsPerPage] = useState<number>(20);
-  const [page, setPage] = useState<any>(0);
+  const [page, setPage] = useState<number>(0);
+  const [isDelete, setIsDelete] = useState<boolean>(false);
+  const [view, setView] = useState<string>("table");
+  const [selectedAddon, setSelectedAddon] = useState<any>(null);
+  const { studioAddon, total } = useSelector(
+    (state: RootStore) => state.doctor
+  );
 
-
+  // Fetch Addons when page, rowsPerPage, or search changes
   useEffect(() => {
-    dispatch(getBanner());
-  }, []);
+    const payload: any = {
+      start: page * rowsPerPage, // Calculate correct pagination start
+      limit: rowsPerPage,
+    };
+    dispatch(getAllAddon(payload));
+    console.log("Fetching data with:", payload);
+  }, [dispatch, search, page, rowsPerPage, view, isDelete]);
 
-  useEffect(() => {
-    setData(banner);
-  }, [banner]);
+  const handleCloseForm = () => {
+    setView("table");
+    setSelectedAddon(null);
+  };
 
-  const handleChangePage = (event: any, newPage: any) => {
+  // Handle page change
+  const handleChangePage = (_event: any, newPage: number) => {
+    console.log("New page:", newPage);
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: any) => {
-    setRowsPerPage(parseInt(event, 10));
-    setPage(0);
+  // Handle rows per page change
+  const handleChangeRowsPerPage = (eventOrValue: any) => {
+    const newRowsPerPage =
+      typeof eventOrValue === "number"
+        ? eventOrValue
+        : parseInt(eventOrValue?.target?.value || "20", 10);
+
+    console.log("Rows per page changed to:", newRowsPerPage);
+    setRowsPerPage(newRowsPerPage);
+    setPage(0); // Reset to first page when rows per page changes
   };
 
-  const bannerTable = [
+  const handleOpenAddAddonModal = () => {
+    setView("add");
+  };
+
+  const handleOpenEditAddonModal = (addon: any) => {
+    setSelectedAddon(addon);
+    setView("edit");
+  };
+
+  const handleDelete = (id: any) => {
+    const data: any = warning("Delete");
+    data
+      .then((logouts: any) => {
+        const yes: any = logouts.isConfirmed;
+        if (yes) {
+          dispatch(deleteAddon(id));
+          setTimeout(() => {
+            setIsDelete(!isDelete);
+          }, 2000);
+        }
+      })
+      .catch((err: any) => console.log(err));
+  };
+
+  const addonsTableColumns = [
     {
-      Header: "No",
-      Cell: ({ index }: { index: any }) => (
-        <span>{page * rowsPerPage + parseInt(index) + 1}</span>
+      Header: "Studio",
+      Cell: ({ row }) => (
+        <div className="userProfile">
+          <span className="text-capitalize fw-bold cursor">
+            {row?.doctorId?.name}
+          </span>
+        </div>
       ),
     },
     {
       Header: "Image",
-      Cell: ({ row, index }: { row: BannerData; index: number }) => (
+      Cell: ({ row }) => (
         <div className="userProfile">
-          <img
-            src={row?.image}
-            style={{ height: "100px", width: "200px" }}
-            alt={`Studio ${page * rowsPerPage + index + 1}`}
-          />
+          <img src={row?.addonImage} width="70px" height="70px" alt="Addon" />
         </div>
       ),
     },
-
     {
-      Header: "IS ACTIVE",
-      body: "isActive",
-      sorting: { type: "client" },
-      Cell: ({ row }: { row: BannerData }) => (
-        <ToggleSwitch
-          value={row?.isActive}
-          onClick={() => {
-            const id: any = row?._id;
-            
-            dispatch(activeBanner(id));
-          }}
-        />
+      Header: "Addon Name",
+      Cell: ({ row }) => (
+        <span className="text-capitalize fw-bold cursor">{row?.addonName}</span>
       ),
     },
-
     {
-      Header: "Delete" ,
-      Cell: ({ row }: { row: BannerData }) => (
-        <span className="d-flex justify-content-center">
+      Header: `Price (${setting?.currencySymbol})`,
+      Cell: ({ row }) => (
+        <span className="text-capitalize fw-bold">
+          {row?.price?.toFixed(2)}
+        </span>
+      ),
+    },
+    {
+      Header: "Quantity",
+      Cell: ({ row }) => <span>{row?.quantity}</span>,
+    },
+    {
+      Header: "Action",
+      Cell: ({ row }) => (
+        <>
           <button
             className="py-1 me-2"
             style={{ backgroundColor: "#CFF3FF", borderRadius: "8px" }}
-            onClick={() => {
-              dispatch(openDialog({ type: "banner", data: row }));
-            }}
+            onClick={() => handleOpenEditAddonModal(row)}
           >
+            {" "}
             <svg
               width="26"
               height="26"
@@ -130,63 +161,60 @@ const Banner = () => {
               />
             </svg>
           </button>
-        </span>
+        </>
       ),
     },
   ];
 
-  const handleDelete = (id: any) => {
-    
-    const data = warning("Delete");
-    data
-      .then((logouts) => {
-        const yes = logouts.isConfirmed;
-        if (yes) {
-          dispatch(deleteBanner(id));
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-
   return (
     <>
-      {dialogueType === "banner" && <BannerDialogue />}
-      <div className={`userTable`}>
-        <Title name= "Banner" />
+      {view === "add" && <StudioAddonsForm onBack={handleCloseForm} />}
+      {view === "edit" && selectedAddon && (
+        <StudioAddonsEditForm
+          addonData={selectedAddon}
+          onBack={handleCloseForm}
+        />
+      )}
 
-        <div className="betBox">
-          <Button
-            className={`bg-button p-10 text-white m10-bottom `}
-            bIcon={`fa-solid fa-user-plus`}
-            text= "Banner"
-            onClick={() => {
-              dispatch(openDialog({ type: "banner" }));
-            }}
-          />
-        </div>
-        <div>
+      {view === "table" && (
+        <div
+          className={`addonTable ${
+            dialogueType === "addon" ? "d-none" : "d-block"
+          }`}
+        >
+          {/* Add Addon Button */}
+          <div style={{ textAlign: "right", marginBottom: "10px" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOpenAddAddonModal}
+            >
+              Add Addon
+            </Button>
+          </div>
+          {/* Table Component */}
           <Table
-            data={data}
-            mapData={bannerTable}
+            data={studioAddon}
+            mapData={addonsTableColumns}
             PerPage={rowsPerPage}
             Page={page}
-            type={"client"}
+            type={"server"}
           />
+
+          {/* Pagination Component */}
           <Pagination
-            type={"client"}
+            type={"server"}
             serverPage={page}
             setServerPage={setPage}
             serverPerPage={rowsPerPage}
             onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            totalData={data?.length}
+            onRowsPerPageChange={handleChangeRowsPerPage} // Corrected this function
+            totalData={total}
           />
         </div>
-      </div>
+      )}
     </>
   );
 };
-Banner.getLayout = function getLayout(page: React.ReactNode) {
-  return <RootLayout>{page}</RootLayout>;
-};
-export default Banner;
+
+export default AddonsTable;

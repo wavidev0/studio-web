@@ -99,7 +99,7 @@ const SuggestedService = () => {
       },
     },
     {
-      Header: "Doctor Name",
+      Header: "Studio Name",
       Cell: ({ row }: { row: SuggestedServiceData }) => (
         <span className="text-capitalize fw-bold">{row?.doctor}</span>
       ),

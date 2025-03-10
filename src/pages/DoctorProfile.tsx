@@ -12,10 +12,14 @@ import {
   getDoctorReview,
   getDoctorVideo,
 } from "@/store/doctorSlice";
-import {  warning } from "@/utils/Alert";
+import { warning } from "@/utils/Alert";
 import { useRouter } from "next/router";
 import Table from "@/extra/Table";
 import Pagination from "@/extra/Pagination";
+import UploadImages from "./DoctorProfileUpload";
+import DoctorImageSlider from "./DoctorProfileSlider";
+import StudioAddonsForm from "./studioAddons/StudioAddonsForm";
+import AddonsTable from "./studioAddons/StudioAddonTable";
 
 interface Doctor {
   _id: string;
@@ -35,12 +39,11 @@ const DoctorProfile = () => {
     (state: RootStore) => state.doctor
   );
 
-
+  console.log("profile", doctorProfile);
 
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const { setting }: any = useSelector((state: RootStore) => state?.setting);
- 
 
   const src = `https://maps.google.com/maps?q=${doctorProfile?.locationCoordinates?.latitude},${doctorProfile?.locationCoordinates?.longitude}&hl=es;&output=embed`;
   const loader = useSelector(isLoading);
@@ -77,7 +80,6 @@ const DoctorProfile = () => {
   }, []);
 
   const handleDelete = async (row: any) => {
-    
     try {
       const data = await warning("Delete");
       const yes = data?.isConfirmed;
@@ -343,18 +345,9 @@ const DoctorProfile = () => {
                     </SkeletonTheme>
                   </>
                 ) : (
-                  <img
-                    src={doctorProfile?.image}
-                    className="img-fluid"
-                    style={{
-                      height: "380px",
-                      width: "380px",
-                      objectFit: "cover",
-                      boxSizing: "border-box",
-                      borderRadius: "30px",
-                    }}
-                    alt=""
-                  />
+                  doctorProfile?.additionalProfileImages?.length > 0 && (
+                    <DoctorImageSlider />
+                  )
                 )}
               </div>
               <div className="col-lg-8 col-md-6 col-12">
@@ -382,8 +375,8 @@ const DoctorProfile = () => {
                         id={`doctorName`}
                         name={`doctorName`}
                         value={doctorProfile?.name}
-                        label={`Doctor name`}
-                        placeholder={`doctorName`}
+                        label={`Studio name`}
+                        placeholder={`studioName`}
                         readOnly
                       />
                     )}
@@ -603,7 +596,7 @@ const DoctorProfile = () => {
                     ) : (
                       <>
                         <div className="inputData number  flex-row justify-content-start text-start">
-                          <label>About doctor</label>
+                          <label>About Studio</label>
                         </div>
                         <Textarea
                           row={5}
@@ -619,7 +612,7 @@ const DoctorProfile = () => {
             <div
               className="my-2"
               style={{
-                width: "291px",
+                width: "500px",
                 border: "1px solid #1c2b20",
                 padding: "4px",
                 borderRadius: "40px",
@@ -630,7 +623,7 @@ const DoctorProfile = () => {
                 className={`${
                   type === "address" ? "activeBtn" : "disabledBtn"
                 }`}
-                onClick={() => setType("address")}  
+                onClick={() => setType("address")}
               >
                 Address
               </button>
@@ -652,6 +645,24 @@ const DoctorProfile = () => {
                 onClick={() => setType("video")}
               >
                 Video
+              </button>
+              <button
+                type="button"
+                className={`${
+                  type === "profile" ? "activeBtn" : "disabledBtn"
+                } ms-1`}
+                onClick={() => setType("profile")}
+              >
+                Profile
+              </button>
+              <button
+                type="button"
+                className={`${
+                  type === "addons" ? "activeBtn" : "disabledBtn"
+                } ms-1`}
+                onClick={() => setType("addons")}
+              >
+                Addon's
               </button>
             </div>
             {type === "address" && (
@@ -715,7 +726,7 @@ const DoctorProfile = () => {
                     src={src}
                     id="iframeId"
                     height="500px"
-                    title="doctorLocation"
+                    title="studioLocation"
                     width="100%"
                   ></iframe>
                 </div>
@@ -793,6 +804,34 @@ const DoctorProfile = () => {
                         onRowsPerPageChange={handleChangeRowsPerPage}
                         totalData={doctorReview?.length}
                       />
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            {type === "profile" && (
+              <>
+                <div className="row bg-white">
+                  <div className="col-lg-12 col-md-12 ">
+                    <div className="m40-top tsBox p-3 br-2">
+                      <h5 className="text-center text-theme">Profile</h5>
+                      <div>
+                        <UploadImages />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            {type === "addons" && (
+              <>
+                <div className="row bg-white">
+                  <div className="col-lg-12 col-md-12 ">
+                    <div className="m40-top tsBox p-3 br-2">
+                      <h5 className="text-center text-theme">Addons</h5>
+                      <div>
+                        <AddonsTable />
+                      </div>
                     </div>
                   </div>
                 </div>

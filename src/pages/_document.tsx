@@ -6,7 +6,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>Doctor</title>
+        <title>Studio</title>
+        {/* <link rel="icon" href="/favicon.ico" /> */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="../../assets/images/logo.png" />
         <link

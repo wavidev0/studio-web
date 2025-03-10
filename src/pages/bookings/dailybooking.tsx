@@ -67,14 +67,14 @@ export default function DailyBooking() {
     },
 
     {
-      Header: "No Of Doctor",
+      Header: "No Of Studio",
       Cell: ({ row }: { row: dailyBookingData }) => (
         <span className="text-capitalize fw-bold cursor">{row?.doctor}</span>
       ),
     },
 
     {
-      Header: `DoctorEarning (${setting?.currencySymbol})`,
+      Header: `StudioEarning (${setting?.currencySymbol})`,
       Cell: ({ row }: { row: dailyBookingData }) => (
         <span className="text-capitalize fw-bold cursor">
           {row?.doctorEarning}

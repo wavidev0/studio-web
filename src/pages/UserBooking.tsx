@@ -128,7 +128,7 @@ export default function UserBooking() {
     },
 
     {
-      Header: "Doctor Name",
+      Header: "Studio Name",
       Cell: ({ row }: { row: userBookingData }) => (
         <span className="text-capitalize fw-bold cursor">
           {row?.doctor.map((doctor: any) => doctor?.name)}

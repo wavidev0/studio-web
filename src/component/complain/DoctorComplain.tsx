@@ -87,7 +87,7 @@ const DoctorComplain = () => {
     },
 
     {
-      Header: "Doctor",
+      Header: "Studio",
       Cell: ({ row }: { row: ComaplainTable }) => (
         <span className="text-capitalize fw-bold">
           {row?.doctor?.name ? row?.doctor?.name : "-"}
@@ -186,7 +186,7 @@ const DoctorComplain = () => {
       ),
     },
     {
-      Header: "Doctor",
+      Header: "Studio",
       Cell: ({ row }: { row: ComaplainTable }) => (
         <span className="text-capitalize fw-bold">
           {row?.doctor?.name ? row?.doctor?.name : "-"}
