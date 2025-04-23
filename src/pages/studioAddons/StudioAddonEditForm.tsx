@@ -104,10 +104,13 @@ const StudioAddonsEditForm: React.FC<{
     if (addonImage) {
       formData.append("addonImage", addonImage);
     }
-
+// console.log(formData,"formDataAddon")
     // Now dispatch the updateAddon with the formData
     const { _id } = addonData; // Extract the id from addonData
-    dispatch(updateAddon({ id: _id, formData }));
+    let payload: any = { id:_id, data: formData };
+    // console.log("editstudio",payload)
+          dispatch(updateAddon(payload));
+    // dispatch(updateAddon({ id: _id, formData }));
     setTimeout(() => {
       onBack();
     }, 2000);

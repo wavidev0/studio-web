@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GradientWarning } from "@/api/toastServices";
 import { Button, IconButton, Box, Card, CardMedia } from "@mui/material";
-import { getDoctorProfile, updateDoctor } from "@/store/doctorSlice";
+import { getDoctorProfile, updateDoctor, updateStudioMultiImage } from "@/store/doctorSlice";
 import { closeDialog } from "@/store/dialogSlice";
 import { useAppDispatch } from "@/store/store";
 import { useSelector } from "react-redux";
@@ -78,28 +78,30 @@ const UploadFiles: React.FC = () => {
       GradientWarning("Please select files to upload.");
       return;
     }
-
+  
     const formData = new FormData();
-
+  
     // Append existing files to FormData
     existingFiles.forEach((file) => {
+      // Assuming existingFiles are URLs or some other format, you need to convert them to File objects if necessary
+      // If they are already File objects, you can append them directly
       formData.append("additionalProfileImages", file);
     });
-
+  
     // Append new files to FormData
     files.forEach((file) => {
       formData.append("additionalProfileImages", file);
     });
-
-    let payload: any = {
-      doctorId: doctorProfile?._id,
-      additionalProfileImages: formData,
-    };
-
-    console.log(payload, "payload");
-    dispatch(updateDoctor(payload));
-    dispatch(getDoctorProfile(id));
-    // dispatch(closeDialog());
+  
+    console.log([...existingFiles, ...files], "Files being sent");
+  
+    // Dispatch the action to update the studio images
+    await dispatch(updateStudioMultiImage({ doctorId: doctorProfile?._id, data: formData }));
+    
+    // Fetch the updated doctor profile
+    await dispatch(getDoctorProfile(id));
+    setFiles([]);
+    setPreviewUrls([]);
   };
 
   return (

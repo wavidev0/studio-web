@@ -133,7 +133,7 @@ const DoctorProfile = () => {
           <img
             src={row && row.image}
             style={{ height: "70px", width: "70px", overflow: "hidden" }}
-            alt="salon"
+            alt="studio"
             className="cursor-pointer"
             height={`100%`}
           />

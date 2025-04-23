@@ -98,7 +98,11 @@ const AddonsTable = () => {
       Header: "Image",
       Cell: ({ row }) => (
         <div className="userProfile">
-          <img src={row?.addonImage} width="70px" height="70px" alt="Addon" />
+          <img
+            src={row?.addonImage}
+            style={{ objectFit: "cover", width: "70px", height: "70px" }}
+            alt="Addon"
+          />
         </div>
       ),
     },
@@ -186,7 +190,7 @@ const AddonsTable = () => {
           <div style={{ textAlign: "right", marginBottom: "10px" }}>
             <Button
               variant="contained"
-              color="primary"
+              style={{ background: "#3b436f" }}
               onClick={handleOpenAddAddonModal}
             >
               Add Addon
@@ -197,7 +201,7 @@ const AddonsTable = () => {
             data={studioAddon}
             mapData={addonsTableColumns}
             PerPage={rowsPerPage}
-            Page={page}
+            Page={page} 
             type={"server"}
           />
 

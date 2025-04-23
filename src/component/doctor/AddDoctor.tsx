@@ -121,11 +121,12 @@ const AddDoctor = () => {
     setImagePath(dialogueData?.image);
   }, [dialogueData]);
 
-
+console.log(dialogueData,"openeditDialog")
 
   const handleInputImage = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.files) {
       setImage(e?.target?.files[0]);
+      console.log(e.target.files)
       setImagePath(URL.createObjectURL(e.target.files[0]));
       setError({ ...error, image: "" });
     }
@@ -208,11 +209,11 @@ const AddDoctor = () => {
       formData.append("awards", awards);
       formData.append("degree", degree);
       formData.append("image", image);
-
+console.log(image,"image")
       
 
       let payload: any = { doctorId: dialogueData?._id, data: formData };
-
+// console.log("editstudio",payload)
       dispatch(updateDoctor(payload));
 
       dispatch(closeDialog());

@@ -99,6 +99,7 @@ export const getVideoComment = createAsyncThunk(
   }
 );
 
+
 export const updateDoctor = createAsyncThunk(
   "admin/doctor/updateProfile",
   async (payload: AllUsersPayload | undefined) => {
@@ -108,7 +109,15 @@ export const updateDoctor = createAsyncThunk(
     );
   }
 );
-
+export const updateStudioMultiImage = createAsyncThunk(
+  "admin/doctor/updateMultiImage",
+  async (payload: AllUsersPayload | undefined) => {
+    return axios.patch(
+      `admin/doctor/updateMultiImage?doctorId=${payload?.doctorId}`,
+      payload?.data
+    );
+  }
+);
 // addon api's
 export const addonCreate = createAsyncThunk(
   "doctor/addon/",
@@ -127,18 +136,26 @@ export const addonCreate = createAsyncThunk(
     return axios.post("doctor/addon/", payload);
   }
 );
+// export const updateAddon = createAsyncThunk(
+//   "doctor/addon/update",
+//   async ({ id, formData }) => {
+//     // Check if the id is passed correctly
+//     console.log("Received ID:", id);
+//     console.log("FormData:", formData);
+
+//     // Perform the PUT request with FormData and the correct id in the URL
+//     return apiInstance.put(`doctor/addon/update/${id}`, formData); // Send FormData with id in the URL
+//   }
+// );
 export const updateAddon = createAsyncThunk(
   "doctor/addon/update",
-  async ({ id, formData }) => {
-    // Check if the id is passed correctly
-    console.log("Received ID:", id);
-    console.log("FormData:", formData);
-
-    // Perform the PUT request with FormData and the correct id in the URL
-    return apiInstance.put(`doctor/addon/update/${id}`, formData); // Send FormData with id in the URL
+  async (payload: AllUsersPayload | undefined) => {
+    return axios.put(
+      `doctor/addon/update/${payload?.id}`,
+      payload?.data
+    );
   }
 );
-
 export const deleteAddon = createAsyncThunk(
   "doctor/addon/delete",
   async (payload) => {
@@ -281,9 +298,9 @@ const doctorSlice = createSlice({
     builder.addCase(addonCreate.fulfilled, (state, action) => {
       state.isLoading = false; // Set loading to false once
 
-      if (action.payload.status == 200 || action.payload.status == 201) {
+      if (action.payload?.status == 200 || action.payload?.status == 201) {
         Success("Addons Created Successfully");
-      } else if (action.payload.status == 400 || action.payload.status == 500) {
+      } else if (action.payload?.status == 400 || action.payload?.status == 500) {
         DangerRight("Addon with this name already exists for the studio");
       } else {
         DangerRight("Failed to create Addon");
@@ -293,11 +310,11 @@ const doctorSlice = createSlice({
     builder.addCase(updateAddon.fulfilled, (state, action) => {
       state.isLoading = false; // Set loading to false once
 
-      if (action.payload.status == 200 || action.payload.status == 201) {
+      if (action.payload?.status == 200 || action.payload?.status == 201) {
         Success("Addons Updated Successfully");
-      } else if (action.payload.status == 400) {
+      } else if (action.payload?.status == 400) {
         DangerRight("Addon with this name already exists for the studio");
-      } else if (action.payload.status == 404) {
+      } else if (action.payload?.status == 404) {
         DangerRight("Addon not found");
       } else {
         DangerRight("Failed to update Addon");

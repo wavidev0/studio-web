@@ -30,7 +30,6 @@ const AllDoctor = () => {
   );
   const { setting }: any = useSelector((state: RootStore) => state?.setting);
 
- 
   const { doctor, total } = useSelector((state: RootStore) => state.doctor);
 
   const router = useRouter();
@@ -68,7 +67,6 @@ const AllDoctor = () => {
   };
 
   const handleSettingSwitch: any = (row: any) => {
-    
     if (row?.name !== "Dr. M.d.batt") {
       dispatch(blockDoctor(row?._id));
     } else {
@@ -89,8 +87,7 @@ const AllDoctor = () => {
         <div className="userProfile">
           <img
             src={row?.image}
-            width="70px"
-            height="70px"
+            style={{ width: "70px", height: "70px", objectFit: "cover" }}
             alt={`Studio ${page * rowsPerPage + index + 1}`}
           />
         </div>
@@ -261,7 +258,6 @@ const AllDoctor = () => {
   ];
 
   const handleDelete = (id: any) => {
-    
     const data: any = warning("Delete");
     data
       .then((logouts: any) => {
