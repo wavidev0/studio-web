@@ -4,15 +4,23 @@ body {
   background-color: white !important;
 }
 
+.mainAdminGrid .mainSidebar {
+  color: #6D7080;
+  height: 100vh;
+  padding: 25px;
+  font-size: 15px;
+  transition: 0.4s;
+}
 .mainAdminGrid {
   /* ============= Sidebar CSS ============= */
   background-color: #FDFFFC;
   box-shadow: 0 0 1px #f1f3f0;
 
+
   & .mainSidebar {
-    color: $darkGray;
+    color: #6D7080;
     height: 100vh;
-    padding: 25px;
+    padding: 0px !important ;
     font-size: 15px;
     transition: 0.4s;
 
@@ -192,7 +200,7 @@ body {
   /*Small Size*/
   &.webAdminGrid {
     & .mainSidebar {
-      padding: 25px 25px 0 25px;
+      // padding: 25px 25px 0 25px;
       height: 100%;
 
       @include maxMediaQuery($lg) {

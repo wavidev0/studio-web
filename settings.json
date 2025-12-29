@@ -1,0 +1,44 @@
+[{
+  "_id": {
+    "$oid": "65268c530489a584a41b35d9"
+  },
+  "tnc": "https://www.google.com/",
+  "privacyPolicyLink": "https://www.google",
+  "createdAt": {
+    "$date": "2023-10-11T11:51:47.941Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-10T08:56:40.992Z"
+  },
+  "tax": 10,
+  "isRazorPay": true,
+  "isStripePay": true,
+  "razorPayId": "rzp_test_SjZz9HC7RGCfCb",
+  "razorSecretKey": "## SECRET KEY ##",
+  "stripePublishableKey": "pk_test_51OFsHfSEMYOcpDHW9N2WeARWsZWPsnWR9reSE7shbyqUPbQpCmLv113AULXO9w6tLN1EbAmxUp3mcuCBHfJkHQJd00Qwe8Wq8v",
+  "stripeSecretKey": "sk_test_51OFsHfSEMYOcpDHWKU0EJzlAUaoU7q3f8aI8wDdOjsRP0VER1nK0Jo0Q625NaLrSztqFvc5k40yN8iEGLczHKCdD00p2Fnyzm8",
+  "maintenanceMode": false,
+  "cashAfterService": true,
+  "currencyName": "USD",
+  "currencySymbol": "USD",
+  "flutterWaveKey": "FLWPUBK_TEST-cdc51a4df113a91fe33a914eaf8d1c75-X",
+  "isFlutterWave": true,
+  "commissionPercent": 12,
+  "zegoAppId": "302170507",
+  "zegoAppSignIn": "2fda5e9e6c354ff258f6bc21ae32a2340ed88f03cb23793943db6d8ddf631a29",
+  "minWithdraw": 200,
+  "firebaseKey": {
+    "type": "service_account",
+    "project_id": "doctor-fc1e8",
+    "private_key_id": "ea7c028954f030bdf471f80b6b8158bb445f16e1",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC3AoBelTkt+bfv\nCTEt6wwtW1V9TqpsM9vJBER1EHiaKUetTsfvszUJLm322hDRWnNJxoZ355ov6bMT\n3HZy85uZcWsZ5wE+sLmEeTCg7xCoj7i+a2A/SFnr+khKy19/nv618332q1CSDBqa\n5Dyq/LT4nCc0tE3vG7y+i5y32J6fyyS3ZLPieDUQ8NYnkPnGbSuK6LKOFKSjMAr1\nFlIrC3/SxRImcK9THEF45zmWU/EJ8MnXP0vsAkWsTArUQDrI+MRLbFhAfaNm75fA\nfj0jTqZhgP3GbdaBYGdhNnO+1ktE+tREHspTrk74wu62+oaccgWtW2QzWa3qLzBC\nzc5UlKXZAgMBAAECggEAGbRjPWWuO1Pozs02uCFce35pmokTDNGX3DsaNmsS1WxY\n4fG/yV4dY+W+kj58wDr5GHKm7m58TKCBg5eil3C5+SpiBahZl2mRFRdEikYpy9Mr\n+qrwQNMzth5YSxEXn8BAPGQv3Bah4XGLxxepocaO0KB2LUPp8lyt/QF1CKmHViAg\ndBYnCPh8RBhPHFbwT7v21Ndz0UJMYkzlaGHVMyVIjXP/4D4nszx4c2y3sUMy9cSj\n5pogXChtbK/+3lC5kKxQzsjYjfLuewpDYdAgOGpZbuPgmVvYcN2uw52VD11gf2j0\n48iY/u8JnUGsuRtV1qwvcymK6zk0IaQSluC6XjX/NQKBgQDhjhrsuvbDn2LJtDWo\ncqrO4yRZoEjQkBLj8yNUbfa0CiTuHvZBHCEKHXl4AB0EAbXbFkoFSsr816p7gVYx\nyxgEB1krVFGbRg7wk5dwttrhtw3ECcDbRuLi7ClIGN9Fk1O7OnY2ON+DFrFENaTb\nofHikahchrab1i3n8GSbjFjMYwKBgQDPtkXhiyNL4fNp9fvE1dLPb8aNzjo/dsfW\nICUsfUwXtwieDpjUWoTch4hBvYO0sCLbh5VUP8zO0havKKcgEFHmh/F8qY0bn+zZ\nrZGc0vKXKRCYHvKDrVifXrWojIF4Fh8CqDkeSFx6Y4VjV8+tF4jWrIoBrHd7H9/n\nJtmhnE9jkwKBgGpe9Q2tgpBxC0qqhR+irDETZ+IouA4709zSnlfD4DO6EP6HdYTx\nOhemHNHd49Eu6U+gLFpgkmg5YToLndWvvOyxdnj7s9yxZnxIboQGiCUoigJowx3m\nSTvROgq5SBpsx3ElufgKTEZrHkBXuB6oOgWqwaaZFWda051tflTpFDuXAoGAFWJD\ngXvMj3Rcle0QFWyZ/mcYfuLbVktJOX8ntJPVsJ9UUMlZ7IrBIN8HJRV4qLJ1dDpa\nIklLMYOpeDDsO73SYLRgJSBjeZOWU7atxgJlnTBKGA8fknTXKdkbRJXqgk1std5R\nuw9iDeuPAPI6XCyPFuK+dnul9VQLvgVe5GduOOcCgYEAv0zVeOfbJHDwscnsTysa\nxCobCEO8WayrRsuDwhEnv8UqLL65tSZIyXuyONn0PetN+e5j/8eSqAOeaOKG74oD\n3Gxc6G8fVJVIZZ+SHxCzrID7wu9jj56mtxGlczZ19r3WrWxYpPvkbSz5CYyey7lO\nZ1Nl0YkSgrkeDQMaZsa9LY4=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-epx54@doctor-fc1e8.iam.gserviceaccount.com",
+    "client_id": "113463937872629221334",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-epx54%40doctor-fc1e8.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  },
+  "durationOfvideo": 60
+}]
