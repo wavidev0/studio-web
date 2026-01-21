@@ -26,6 +26,7 @@ const StudioAddonsForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const dispatch = useAppDispatch();
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Handle image selection
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +69,6 @@ const StudioAddonsForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const validateForm = () => {
     let formErrors: { [key: string]: string } = {};
     if (!name) formErrors.name = "Addon Name is required.";
-    if (!description) formErrors.description = "Description is required.";
     if (!price) formErrors.price = "Price is required.";
     if (!quantity) formErrors.quantity = "Quantity is required.";
     if (!addonImage) formErrors.addonImage = "Addon image is required.";
@@ -110,31 +110,34 @@ const StudioAddonsForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   };
 
   // Handle form submission
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateForm()) return;
 
-    // Create a FormData object
-    const formData = new FormData();
-    formData.append("doctorId", doctorProfile?._id || "");
-    formData.append("addonName", name);
-    formData.append("description", description);
-    formData.append("price", price.toString());
-    formData.append("quantity", quantity.toString());
+    setIsLoading(true);
+    try {
+      // Create a FormData object
+      const formData = new FormData();
+      formData.append("doctorId", doctorProfile?._id || "");
+      formData.append("addonName", name);
+      formData.append("description", description);
+      formData.append("price", price.toString());
+      formData.append("quantity", quantity.toString());
 
-    if (addonImage) {
-      formData.append("addonImage", addonImage);
-    }
+      if (addonImage) {
+        formData.append("addonImage", addonImage);
+      }
 
-    // Log FormData contents (for debugging)
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
+      // Dispatch FormData instead of JSON payload
+      await dispatch(addonCreate(formData));
+      
+      setTimeout(() => {
+        onBack();
+      }, 2000);
+    } catch (error) {
+      console.error("Error creating addon:", error);
+    } finally {
+      setIsLoading(false);
     }
-    console.log(formData);
-    // Dispatch FormData instead of JSON payload
-    dispatch(addonCreate(formData));
-    setTimeout(() => {
-      onBack();
-    }, 2000);
   };
 
   return (
@@ -151,7 +154,7 @@ const StudioAddonsForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             id="addonName"
             name="addonName"
             value={name}
-            label="Addon Name"
+            label={<span>Addon Name <span style={{ color: 'red' }}>*</span></span>}
             placeholder="Enter Addon Name"
             onChange={(e) => handleInputChange(e, "name")}
             error={!!errors.name} // Error flag
@@ -172,9 +175,7 @@ const StudioAddonsForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             onChange={(e) => handleInputChange(e, "description")}
             error={!!errors.description} // Error flag
           />
-          {errors.description && (
-            <FormHelperText error>{errors.description}</FormHelperText> // Custom error message display
-          )}
+
         </Grid>
 
         {/* Price Input */}
@@ -183,7 +184,7 @@ const StudioAddonsForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             id="addonPrice"
             name="addonPrice"
             value={price}
-            label="Price"
+            label={<span>Price <span style={{ color: 'red' }}>*</span></span>}
             placeholder="Enter Price"
             onChange={(e) => handleInputChange(e, "price")}
             // type="number"
@@ -200,7 +201,7 @@ const StudioAddonsForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             id="addonQuantity"
             name="addonQuantity"
             value={quantity}
-            label="Quantity"
+            label={<span>Quantity <span style={{ color: 'red' }}>*</span></span>}
             placeholder="Enter Quantity"
             onChange={(e) => handleInputChange(e, "quantity")}
             // type="number"
@@ -228,7 +229,7 @@ const StudioAddonsForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
               fullWidth
               sx={{ mt: 2 }}
             >
-              Upload Addon Image
+              Upload Addon Image <span style={{ color: 'red' }}>*</span>
             </Button>
           </label>
           {errors.addonImage && (
@@ -295,8 +296,9 @@ const StudioAddonsForm: React.FC<{ onBack: () => void }> = ({ onBack }) => {
               variant="contained"
               style={{ backgroundColor: "#1ebc1e" }}
               sx={{ mt: 3 }}
+              disabled={isLoading}
             >
-              Add Addon
+              {isLoading ? "Adding..." : "Add Addon"}
             </Button>
           </div>
         </Grid>

@@ -37,9 +37,10 @@ const StudioAddonsEditForm: React.FC<{
   );
   const [addonImage, setAddonImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>(
-    addonData.imageUrl || ""
+    addonData?.addonImage || ""
   );
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { doctorProfile } = useSelector((state: RootStore) => state.doctor);
   const dispatch = useAppDispatch();
@@ -75,45 +76,52 @@ const StudioAddonsEditForm: React.FC<{
       return newErrors;
     });
   };
+  {
+    console.log("addonData.imageUrl", addonData);
+  }
 
   const validateForm = () => {
     let formErrors: { [key: string]: string } = {};
     if (!addonName.trim()) formErrors.addonName = "Addon Name is required.";
-    if (!description.trim())
-      formErrors.description = "Description is required.";
     if (!price) formErrors.price = "Price is required.";
     if (!quantity) formErrors.quantity = "Quantity is required.";
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateForm()) return;
 
-    // Create a new FormData instance
-    const formData = new FormData();
+    setIsLoading(true);
+    try {
+      // Create a new FormData instance
+      const formData = new FormData();
 
-    // Append form fields to the FormData object (excluding id and doctorId)
-    formData.append("addonName", addonName);
-    formData.append("description", description);
-    formData.append("price", String(price));
-    formData.append("quantity", String(quantity));
-    formData.append("doctorId", addonData?.doctorId?._id);
+      // Append form fields to the FormData object (excluding id and doctorId)
+      formData.append("addonName", addonName);
+      formData.append("description", description);
+      formData.append("price", String(price));
+      formData.append("quantity", String(quantity));
+      formData.append("doctorId", addonData?.doctorId?._id);
 
-    // Append the image if it's selected
-    if (addonImage) {
-      formData.append("addonImage", addonImage);
+      // Append the image if it's selected
+      if (addonImage) {
+        formData.append("addonImage", addonImage);
+      }
+
+      // Now dispatch the updateAddon with the formData
+      const { _id } = addonData; // Extract the id from addonData
+      let payload: any = { id: _id, data: formData };
+      await dispatch(updateAddon(payload));
+
+      setTimeout(() => {
+        onBack();
+      }, 2000);
+    } catch (error) {
+      console.error("Error updating addon:", error);
+    } finally {
+      setIsLoading(false);
     }
-// console.log(formData,"formDataAddon")
-    // Now dispatch the updateAddon with the formData
-    const { _id } = addonData; // Extract the id from addonData
-    let payload: any = { id:_id, data: formData };
-    // console.log("editstudio",payload)
-          dispatch(updateAddon(payload));
-    // dispatch(updateAddon({ id: _id, formData }));
-    setTimeout(() => {
-      onBack();
-    }, 2000);
   };
 
   return (
@@ -124,7 +132,11 @@ const StudioAddonsEditForm: React.FC<{
             id="addonName"
             name="addonName"
             value={addonName}
-            label="Addon Name"
+            label={
+              <span>
+                Addon Name <span style={{ color: "red" }}>*</span>
+              </span>
+            }
             placeholder="Enter Addon Name"
             onChange={(e) => setAddonName(e.target.value)}
             error={!!errors.addonName}
@@ -144,9 +156,6 @@ const StudioAddonsEditForm: React.FC<{
             onChange={(e) => setDescription(e.target.value)}
             error={!!errors.description}
           />
-          {errors.description && (
-            <FormHelperText error>{errors.description}</FormHelperText>
-          )}
         </Grid>
 
         <Grid item xs={12} sm={6}>
@@ -154,7 +163,11 @@ const StudioAddonsEditForm: React.FC<{
             id="addonPrice"
             name="addonPrice"
             value={price}
-            label="Price"
+            label={
+              <span>
+                Price <span style={{ color: "red" }}>*</span>
+              </span>
+            }
             placeholder="Enter Price"
             onChange={(e) => setPrice(e.target.value)}
             error={!!errors.price}
@@ -169,7 +182,11 @@ const StudioAddonsEditForm: React.FC<{
             id="addonQuantity"
             name="addonQuantity"
             value={quantity}
-            label="Quantity"
+            label={
+              <span>
+                Quantity <span style={{ color: "red" }}>*</span>
+              </span>
+            }
             placeholder="Enter Quantity"
             onChange={(e) => setQuantity(e.target.value)}
             error={!!errors.quantity}
@@ -202,7 +219,6 @@ const StudioAddonsEditForm: React.FC<{
             <FormHelperText error>{errors.addonImage}</FormHelperText>
           )}
         </Grid>
-
         {previewUrl && (
           <Grid
             item
@@ -233,6 +249,31 @@ const StudioAddonsEditForm: React.FC<{
           </Grid>
         )}
 
+        {/* Existing Image */}
+        {addonData.imageUrl && (
+          <Grid item xs={12}>
+            <Box sx={{ textAlign: "center", mt: 2 }}>
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  marginBottom: "8px",
+                  color: "#666",
+                }}
+              >
+                Current Image
+              </p>
+              <Card sx={{ width: 120, height: 120, mx: "auto" }}>
+                <CardMedia
+                  component="img"
+                  image={addonData.imageUrl}
+                  sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </Card>
+            </Box>
+          </Grid>
+        )}
+
         <Grid
           item
           xs={12}
@@ -246,9 +287,9 @@ const StudioAddonsEditForm: React.FC<{
             variant="contained"
             color="primary"
             style={{ backgroundColor: "#1ebc1e" }}
-            disabled={!addonName.trim() || !price || !quantity}
+            disabled={!addonName.trim() || !price || !quantity || isLoading}
           >
-            Update Addon
+            {isLoading ? "Updating..." : "Update Addon"}
           </Button>
         </Grid>
       </Grid>

@@ -166,7 +166,9 @@ export const getAllAddon = createAsyncThunk(
   "doctor/addon/getaddons",
   async (payload: AllUsersPayload | undefined) => {
     return apiInstanceFetch.get(
-      `doctor/addon/getaddons?start=${payload?.start}&limit=${payload?.limit}&search=${payload?.search}`
+      `doctor/addon/getaddons?start=${payload?.start}&limit=${payload?.limit}`
+      // &search=${payload?.search}
+      
     );
   }
 );

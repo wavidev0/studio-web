@@ -814,7 +814,7 @@ const DoctorProfile = () => {
                 <div className="row bg-white">
                   <div className="col-lg-12 col-md-12 ">
                     <div className="m40-top tsBox p-3 br-2">
-                      <h5 className="text-center text-theme">Profile</h5>
+                      {/* <h5 className="text-center text-theme">Profile</h5> */}
                       <div>
                         <UploadImages />
                       </div>

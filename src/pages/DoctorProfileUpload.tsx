@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { GradientWarning } from "@/api/toastServices";
-import { Button, IconButton, Box, Card, CardMedia } from "@mui/material";
+import { 
+  Button, 
+  IconButton, 
+  Box, 
+  Card, 
+  CardMedia, 
+  Typography,
+  Chip,
+  Paper
+} from "@mui/material";
+import { 
+  MdCloudUpload,
+  MdDelete,
+  MdImage,
+  MdVideoFile
+} from "react-icons/md";
 import { getDoctorProfile, updateDoctor, updateStudioMultiImage } from "@/store/doctorSlice";
 import { closeDialog } from "@/store/dialogSlice";
 import { useAppDispatch } from "@/store/store";
@@ -105,132 +120,228 @@ const UploadFiles: React.FC = () => {
   };
 
   return (
-    <Box sx={{ p: 3, borderRadius: 2, bgcolor: "white" }}>
-      <h5 className="text-center text-theme text-lg font-semibold mb-3 mt-5">
-        Upload Files (Max: {MAX_FILES})
-      </h5>
-
-      {/* Upload Button */}
-      <label htmlFor="upload-button">
-        <input
-          type="file"
-          accept="image/*,video/*"
-          multiple
-          onChange={handleFileChange}
-          style={{ display: "none" }}
-          id="upload-button"
+    <>
+      {/* Header */}
+      <Box sx={{ textAlign: 'center', mb: 4 }}>
+      <h5 className="text-2xl font-semibold text-theme mb-2">
+          Studio Media Gallery
+        </h5>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+          Showcase your studio with high-quality images and videos
+        </Typography>
+        <Chip 
+          label={`${existingFiles.length + files.length}/${MAX_FILES} files`}
+          color={existingFiles.length + files.length >= MAX_FILES ? "error" : "primary"}
+          variant="outlined"
+          sx={{ fontWeight: 500 }}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          component="span"
-          fullWidth
-          disabled={existingFiles.length + files.length >= MAX_FILES}
-        >
-          Choose Files
-        </Button>
-      </label>
-
-      {/* File List */}
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 2,
-          mt: 3,
-          justifyContent: "center",
-        }}
-      >
-        {/* Existing Files */}
-        {existingFiles.map((url, index) => (
-          <Card
-            key={`existing-${index}`}
-            sx={{ width: 120, height: 120, position: "relative" }}
-          >
-            <CardMedia
-              component="img"
-              image={url}
-              sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-            <IconButton
-              onClick={() => removeFile(index, true)}
-              size="small"
-              sx={{
-                position: "absolute",
-                top: 4,
-                right: 4,
-                bgcolor: "rgba(0,0,0,0.5)",
-                color: "white",
-                "&:hover": { bgcolor: "red" },
-                width: "30px",
-                height: "30px",
-              }}
-            >
-              x
-            </IconButton>
-          </Card>
-        ))}
-
-        {/* New Uploaded Files */}
-        {previewUrls.map((url, index) => {
-          const isVideo = files[index]?.type.startsWith("video/");
-          return (
-            <Card
-              key={`new-${index}`}
-              sx={{ width: 120, height: 120, position: "relative" }}
-            >
-              {isVideo ? (
-                <video
-                  src={url}
-                  controls
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              ) : (
-                <CardMedia
-                  component="img"
-                  image={url}
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    objectPosition: "center",
-                  }}
-                />
-              )}
-              <IconButton
-                onClick={() => removeFile(index, false)}
-                size="small"
-                sx={{
-                  position: "absolute",
-                  top: 4,
-                  right: 4,
-                  bgcolor: "rgba(0,0,0,0.5)",
-                  color: "white",
-                  "&:hover": { bgcolor: "red" },
-                  width: "30px",
-                  height: "30px",
-                }}
-              >
-                x
-              </IconButton>
-            </Card>
-          );
-        })}
       </Box>
 
+      {/* Upload Area */}
+      <Box sx={{ mb: 4, textAlign: 'center' }}>
+        <Button
+          variant="outlined"
+          component="label"
+          startIcon={<MdCloudUpload />}
+          disabled={existingFiles.length + files.length >= MAX_FILES}
+          sx={{ 
+            mb: 2, 
+            px: 4, 
+            py: 1.5,
+            borderRadius: 2,
+            borderColor: '#3498db',
+            color: '#3498db',
+            '&:hover': {
+              borderColor: '#2980b9',
+              bgcolor: '#f8f9ff'
+            }
+          }}
+        >
+          {existingFiles.length + files.length >= MAX_FILES 
+            ? "Maximum files reached" 
+            : "Choose Files"
+          }
+          <input
+            type="file"
+            accept="image/*,video/*"
+            multiple
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+        </Button>
+        <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
+          Supported formats: JPG, PNG, MP4, AVI, MOV
+        </Typography>
+      </Box>
+
+      {/* File Grid */}
+      {(existingFiles.length > 0 || files.length > 0) && (
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h6" sx={{ mb: 3, fontWeight: 500, color: '#34495e', textAlign: 'center' }}>
+            Media Preview
+          </Typography>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+              gap: 3,
+              justifyItems: "center"
+            }}
+          >
+            {/* Existing Files */}
+            {existingFiles.map((url, index) => (
+              <Paper 
+                key={`existing-${index}`} 
+                elevation={3}
+                sx={{ 
+                  position: 'relative',
+                  borderRadius: 3,
+                  overflow: 'hidden',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 8px 25px rgba(0,0,0,0.15)'
+                  }
+                }}
+              >
+                <img
+                  src={url}
+                  alt="existing"
+                  style={{ width: 160, height: 160, objectFit: 'cover', display: 'block' }}
+                />
+                <Chip
+                  label="Saved"
+                  size="small"
+                  color="success"
+                  sx={{
+                    position: 'absolute',
+                    bottom: 8,
+                    left: 8,
+                    fontSize: '0.7rem',
+                    fontWeight: 600
+                  }}
+                />
+                <IconButton
+                  onClick={() => removeFile(index, true)}
+                  size="small"
+                  sx={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                    bgcolor: 'rgba(231, 76, 60, 0.9)',
+                    color: 'white',
+                    width: 28,
+                    height: 28,
+                    '&:hover': { 
+                      bgcolor: '#c0392b',
+                      transform: 'scale(1.1)'
+                    },
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <MdDelete size={16} />
+                </IconButton>
+              </Paper>
+            ))}
+
+            {/* New Files */}
+            {previewUrls.map((url, index) => {
+              const isVideo = files[index]?.type.startsWith("video/");
+              return (
+                <Paper 
+                  key={`new-${index}`} 
+                  elevation={3}
+                  sx={{ 
+                    position: 'relative',
+                    borderRadius: 3,
+                    overflow: 'hidden',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 8px 25px rgba(0,0,0,0.15)'
+                    }
+                  }}
+                >
+                  {isVideo ? (
+                    <video
+                      src={url}
+                      style={{ width: 160, height: 160, objectFit: 'cover', display: 'block' }}
+                    />
+                  ) : (
+                    <img
+                      src={url}
+                      alt="new"
+                      style={{ width: 160, height: 160, objectFit: 'cover', display: 'block' }}
+                    />
+                  )}
+                  <Chip
+                    icon={isVideo ? <MdVideoFile /> : <MdImage />}
+                    label="New"
+                    size="small"
+                    color="primary"
+                    sx={{
+                      position: 'absolute',
+                      bottom: 8,
+                      left: 8,
+                      fontSize: '0.7rem',
+                      fontWeight: 600
+                    }}
+                  />
+                  <IconButton
+                    onClick={() => removeFile(index, false)}
+                    size="small"
+                    sx={{
+                      position: 'absolute',
+                      top: 8,
+                      right: 8,
+                      bgcolor: 'rgba(231, 76, 60, 0.9)',
+                      color: 'white',
+                      width: 28,
+                      height: 28,
+                      '&:hover': { 
+                        bgcolor: '#c0392b',
+                        transform: 'scale(1.1)'
+                      },
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    <MdDelete size={16} />
+                  </IconButton>
+                </Paper>
+              );
+            })}
+          </Box>
+        </Box>
+      )}
+
       {/* Upload Button */}
-      <div className="flex items-center justify-center w-full">
+      <Box sx={{ textAlign: 'right', pt: 2, borderTop: '1px solid #ecf0f1' }}>
         <Button
           onClick={handleUpload}
           variant="contained"
-          color="success"
-          sx={{ mt: 3 }}
+          startIcon={<MdCloudUpload />}
           disabled={files.length === 0}
+          sx={{
+            px: 4,
+            py: 1.5,
+            borderRadius: 2,
+            bgcolor: '#27ae60',
+            fontWeight: 600,
+            '&:hover': {
+              bgcolor: '#229954',
+              transform: 'translateY(-1px)',
+              boxShadow: '0 4px 12px rgba(39, 174, 96, 0.3)'
+            },
+            '&:disabled': {
+              bgcolor: '#bdc3c7'
+            },
+            transition: 'all 0.2s ease'
+          }}
         >
           Upload Files
         </Button>
-      </div>
-    </Box>
+      </Box>
+    </>
   );
 };
 

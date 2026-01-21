@@ -6,7 +6,7 @@ import { RootStore, useAppDispatch } from "@/store/store";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { closeDialog } from "@/store/dialogSlice";
-import { updateDoctor } from "@/store/doctorSlice";
+import { updateDoctor, getAllDoctor } from "@/store/doctorSlice";
 
 
 interface ErrorState {
@@ -214,9 +214,15 @@ console.log(image,"image")
 
       let payload: any = { doctorId: dialogueData?._id, data: formData };
 // console.log("editstudio",payload)
-      dispatch(updateDoctor(payload));
-
-      dispatch(closeDialog());
+      dispatch(updateDoctor(payload))
+        .unwrap()
+        .then(() => {
+          dispatch(getAllDoctor({ start: 0, limit: 10, search: "" }));
+          dispatch(closeDialog());
+        })
+        .catch(() => {
+          dispatch(closeDialog());
+        });
     }
   };
 
