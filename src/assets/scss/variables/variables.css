@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Brand */
+  --new-color: #6366f1;
+  --new-color-dark: #4f46e5;
+  --new-color-light: #e0e7ff;
+  --new-color-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+
+  /* Sidebar */
+  --sidebar-bg: #111827;
+  --sidebar-text: #9ca3af;
+  --sidebar-text-active: #ffffff;
+  --sidebar-active-bg: rgba(99, 102, 241, 0.15);
+  --sidebar-active-border: #6366f1;
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.06);
+  --sidebar-section-label: #4b5563;
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 72px;
+
+  /* Layout */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --new-border-color: #e2e8f0;
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06);
+
+  /* Legacy compat */
+  --black--: #000;
+  --white--: #fff;
+  --prime--: #6366f1;
+  --blackPrime--: #0f172a;
+  --grayPrime--: #64748b;
+  --inputBorder--: #e2e8f0;
+  --btnPrime--: #6366f1;
+  --gray--: #64748b;
+  --pink--: #ec4899;
+  --lightOrangeColor: #6366f1;
+  --scrollColor--: #cbd5e1;
+  --TableFont--: #475569;
+  --TableColumnBold--: #1e293b;
+  --fontPoppins--: 'Inter', sans-serif;
+}
