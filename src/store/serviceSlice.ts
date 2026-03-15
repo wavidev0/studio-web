@@ -22,12 +22,12 @@ const initialState: UserState = {
 interface AllUsersPayload {
   start?: number;
   limit?: number;
-  search: any;
+  search?: any;
   startDate?: string;
   endDate?: string;
   type?: string;
-  meta: any;
-  id?: string;
+  meta?: any;
+  id?: any;
   data?: any;
   formData?: any;
   payload?: any;

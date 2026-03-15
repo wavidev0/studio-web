@@ -18,15 +18,15 @@ const initialState: UserState = {
 interface AllUsersPayload {
   start?: number;
   limit?: number;
-  search: string;
+  search?: string;
   startDate?: string;
   endDate?: string;
   type?: string;
   meta?: any;
   id?: any;
-  data: any;
-  bannerId: any;
-  payload: any;
+  data?: any;
+  bannerId?: any;
+  payload?: any;
 }
 
 
@@ -39,8 +39,7 @@ export const getBanner = createAsyncThunk(
 
 export const createBanner = createAsyncThunk(
   "admin/banner/create",
-  async (payload: AllUsersPayload | undefined) => {
-    
+  async (payload: any) => {
     return axios.post("admin/banner/create", payload);
   }
 );
