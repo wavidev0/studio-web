@@ -66,7 +66,7 @@ export const getUserWalletHistory = createAsyncThunk(
 
 export const blockuser = createAsyncThunk(
   "admin/user/blockUnblock",
-  async (payload: AllUsersPayload | undefined) => {
+  async (payload: AllUsersPayload | string | undefined) => {
     return apiInstance.put(`admin/user/blockUnblock?userId=${payload}`);
   }
 );

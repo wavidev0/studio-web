@@ -62,7 +62,7 @@ const UserProfile = () => {
       Cell: ({ row }: { row: any }) => <span>{row?.uniqueId || "—"}</span>,
     },
     {
-      Header: `Amount (${setting?.currencySymbol || "$"})`,
+      Header: `Amount (${setting?.currencySymbol || '₹'})`,
       Cell: ({ row }: { row: any }) => <span style={{ fontWeight: 600 }}>{row?.amount ?? "—"}</span>,
     },
     {

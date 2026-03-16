@@ -51,7 +51,7 @@ const AllDoctor = ({ view = "list" }: Props) => {
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [page, setPage] = useState<number>(0);
 
-  const cur = setting?.currencySymbol || "$";
+  const cur = setting?.currencySymbol || '₹';
 
   useEffect(() => {
     dispatch(getAllDoctor({ start: page, limit: rowsPerPage, search }));

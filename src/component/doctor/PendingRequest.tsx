@@ -92,11 +92,11 @@ const PendingRequest = () => {
       Cell: ({ row }) => <span>{row?.country}</span>,
     },
     {
-      Header: `Charge (${setting?.currencySymbol || "$"})`,
+      Header: `Charge (${setting?.currencySymbol || '₹'})`,
       body: "platformFee",
       sorting: { type: "client" },
       Cell: ({ row }) => (
-        <span className="text-capitalize fw-bold">{row?.charge.toFixed()} {setting?.currencySymbol || "$"}</span>
+        <span className="text-capitalize fw-bold">{row?.charge.toFixed()} {setting?.currencySymbol || '₹'}</span>
       ),
     },
     {

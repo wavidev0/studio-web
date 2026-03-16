@@ -170,10 +170,10 @@ const DoctorBooking = () => {
     },
 
     {
-      Header: `Amount (${setting?.currencySymbol || "$"})`,
+      Header: `Amount (${setting?.currencySymbol || '₹'})`,
       Cell: ({ row }: { row: bookingData }) => (
         <span className="text-capitalize cursor">
-          {row?.amount} {setting?.currencySymbol || "$"}
+          {row?.amount} {setting?.currencySymbol || '₹'}
         </span>
       ),
     },

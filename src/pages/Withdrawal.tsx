@@ -46,7 +46,7 @@ export default function Withdrawal() {
   const [startDate, setStartDate] = useState("ALL");
   const [endDate, setEndDate] = useState("ALL");
 
-  const cur = setting?.currencySymbol || "$";
+  const cur = setting?.currencySymbol || '₹';
 
   useEffect(() => {
     dispatch(getWithdrawalRequest({ status, startDate, endDate }));

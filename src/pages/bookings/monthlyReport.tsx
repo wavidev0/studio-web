@@ -29,7 +29,7 @@ export default function MonthlyReport() {
   const [rowsPerPage, setRowsPerPage] = useState<number>(12);
   const [selectedDate, setSelectedDate] = useState<any>(thisYear);
 
-  const cur = setting?.currencySymbol || "$";
+  const cur = setting?.currencySymbol || '₹';
   const formattedYear = moment(selectedDate).format("YYYY");
 
   useEffect(() => {
@@ -115,14 +115,15 @@ export default function MonthlyReport() {
         {/* Year picker */}
         <div style={{ position: "relative" }}>
           <IconCalendar size={16} style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", color: "#9CA3AF", pointerEvents: "none", zIndex: 1 }} />
-          <ReactDatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            dateFormat="yyyy"
-            showYearPicker
-            className="form-control"
-            style={{ paddingLeft: 32, fontSize: 13, borderRadius: 8, width: 140 }}
-          />
+          <div style={{ paddingLeft: 32, width: 140 }}>
+            <ReactDatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              dateFormat="yyyy"
+              showYearPicker
+              className="form-control"
+            />
+          </div>
         </div>
       </div>
 

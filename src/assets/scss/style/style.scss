@@ -53,6 +53,15 @@ body {
 
     &.mobSidebar {
       transform: translateX(0);
+
+      &::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        left: 240px;
+        background: rgba(0,0,0,0.45);
+        z-index: -1;
+      }
     }
   }
 }

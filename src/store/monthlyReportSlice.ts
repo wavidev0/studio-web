@@ -18,7 +18,7 @@ interface AllUsersPayload {
 
 export const getMonthlyReport = createAsyncThunk(
   "admin/appointment/monthlyState",
-  async (payload: AllUsersPayload | undefined) => {
+  async (payload: AllUsersPayload | string | undefined) => {
     return apiInstanceFetch.get(
       `admin/appointment/monthlyState?year=${payload}`
     );

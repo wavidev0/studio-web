@@ -27,7 +27,7 @@ export default function DailyBooking() {
   const [startDate, setStartDate] = useState("ALL");
   const [endDate, setEndDate] = useState("ALL");
 
-  const cur = setting?.currencySymbol || "$";
+  const cur = setting?.currencySymbol || '₹';
 
   useEffect(() => {
     dispatch(getDailyBooking({ startDate, endDate, start: page, limit: rowsPerPage }));

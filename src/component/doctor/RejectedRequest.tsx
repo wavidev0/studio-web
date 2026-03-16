@@ -79,11 +79,11 @@ const RejectedRequest = () => {
       Cell: ({ row }) => <span>{row?.country}</span>,
     },
     {
-      Header: `Charge (${setting?.currencySymbol || "$"})`,
+      Header: `Charge (${setting?.currencySymbol || '₹'})`,
       body: "platformFee",
       Cell: ({ row }) => (
         <span className="text-capitalize">
-          {row?.charge?.toFixed()} {setting?.currencySymbol || "$"}
+          {row?.charge?.toFixed()} {setting?.currencySymbol || '₹'}
         </span>
       ),
       sorting: { type: "client" },

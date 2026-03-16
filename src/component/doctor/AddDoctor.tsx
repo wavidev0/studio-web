@@ -142,7 +142,7 @@ const AddDoctor = () => {
                   onChange={(e: any) => setPassword(e.target.value)} />
               </div>
               <div className="col-12 col-md-6 col-lg-4">
-                <ExInput type="number" label={`Price/Hr (${setting?.currencySymbol || "$"})`} placeholder="Price per hour"
+                <ExInput type="number" label={`Price/Hr (${setting?.currencySymbol || '₹'})`} placeholder="Price per hour"
                   value={charge} errorMessage={error.charge}
                   onChange={(e: any) => { setCharge(e.target.value); field("charge", e.target.value); }} />
               </div>

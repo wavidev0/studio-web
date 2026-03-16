@@ -22,8 +22,8 @@ interface AllUsersPayload {
   endDate?: any;
   appoinmentId?: any;
   reason?: string;
-  status?: number;
-  dialogPayload: any;
+  status?: number | string;
+  dialogPayload?: any;
 }
 
 export const getAllBookings = createAsyncThunk(

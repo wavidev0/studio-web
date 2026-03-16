@@ -512,7 +512,7 @@ const DoctorProfile = () => {
                         id={`charge`}
                         name={`charge`}
                         value={doctorProfile?.charge ? doctorProfile?.charge : ""}
-                        label={`Price/Hr (${setting?.currencySymbol || "$"})`}
+                        label={`Price/Hr (${setting?.currencySymbol || '₹'})`}
                         placeholder={`Charge`}
                         readOnly
                       />

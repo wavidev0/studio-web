@@ -46,7 +46,7 @@ export const createBanner = createAsyncThunk(
 
 export const deleteBanner = createAsyncThunk(
   "admin/banner/delete",
-  async (payload: AllUsersPayload | undefined) => {
+  async (payload: AllUsersPayload | string | undefined) => {
     return axios.delete(`admin/banner/delete?bannerId=${payload}`);
   }
 );
@@ -63,7 +63,7 @@ export const updatedBanner = createAsyncThunk(
 
 export const activeBanner = createAsyncThunk(
   "admin/banner/isActive",
-  async (payload: AllUsersPayload | undefined) => {
+  async (payload: AllUsersPayload | string | undefined) => {
     return axios.put(`admin/banner/isActive?bannerId=${payload}`);
   }
 );

@@ -18,16 +18,16 @@ const initialState: UserState = {
 interface AllUsersPayload {
   start?: number;
   limit?: number;
-  search: string;
+  search?: string;
   startDate?: string;
   endDate?: string;
   type?: string;
   meta?: any;
   id?: any;
-  data: any;
-  doctorId: any;
-  payload: any;
-  month: any;
+  data?: any;
+  doctorId?: any;
+  payload?: any;
+  month?: any;
 }
 
 export const getAttendence = createAsyncThunk(

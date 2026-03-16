@@ -14,6 +14,12 @@ import {
   IconTicket, IconDeviceDesktop, IconUserCircle, IconChevronDown,
 } from "@tabler/icons-react";
 
+const closeMobileSidebar = () => {
+  if (window.innerWidth < 992) {
+    $(".mainSidebar").removeClass("mobSidebar");
+  }
+};
+
 const Sidebar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -169,7 +175,7 @@ const Sidebar = () => {
                         <Link
                           href={item.path}
                           className={`sidebar-link ${active ? "sidebar-link-active" : ""}`}
-                          onClick={item.onClick}
+                          onClick={() => { item.onClick?.(); closeMobileSidebar(); }}
                         >
                           <span className="sidebar-icon">{item.icon}</span>
                           <span className="sidebar-label">{item.name}</span>
@@ -177,7 +183,7 @@ const Sidebar = () => {
                       ) : (
                         <button
                           className="sidebar-link sidebar-link-btn sidebar-logout"
-                          onClick={item.onClick}
+                          onClick={() => { item.onClick?.(); closeMobileSidebar(); }}
                         >
                           <span className="sidebar-icon">{item.icon}</span>
                           <span className="sidebar-label">{item.name}</span>
@@ -191,6 +197,7 @@ const Sidebar = () => {
                               <Link
                                 href={sub.path}
                                 className={`sidebar-sublink ${pathname === sub.path ? "sidebar-sublink-active" : ""}`}
+                                onClick={closeMobileSidebar}
                               >
                                 <span className="sidebar-subdot" />
                                 {sub.name}
@@ -215,16 +222,41 @@ export default Sidebar;
 
 export const SideMenuJS = () => {
   useEffect(() => {
+    const isMobile = () => window.innerWidth < 992;
+
     const handleToggle = () => {
-      const sidebar = $(".mainSidebar");
-      sidebar.toggleClass("sidebar-collapsed");
-      $(".sideBar").toggleClass("mobSidebar webSidebar");
-      $(".sideBarTitle").toggleClass("hidden");
-      $(".sidebar-logo-text").toggleClass("hidden");
+      if (isMobile()) {
+        // mobile: slide sidebar in/out
+        $(".mainSidebar").toggleClass("mobSidebar");
+      } else {
+        // desktop: collapse to icon-only
+        $(".sideBar").toggleClass("mobSidebar webSidebar");
+        $(".sideBarTitle").toggleClass("hidden");
+        $(".sidebar-logo-text").toggleClass("hidden");
+      }
+    };
+
+    // close sidebar when clicking outside on mobile
+    const handleOutside = (e: any) => {
+      if (
+        isMobile() &&
+        $(".mainSidebar").hasClass("mobSidebar") &&
+        !$(".mainSidebar").is(e.target) &&
+        $(".mainSidebar").has(e.target).length === 0 &&
+        !$(".navToggle").is(e.target) &&
+        $(".navToggle").has(e.target).length === 0
+      ) {
+        $(".mainSidebar").removeClass("mobSidebar");
+      }
     };
 
     $(".navToggle").on("click", handleToggle);
-    return () => { $(".navToggle").off("click", handleToggle); };
+    $(document).on("click", handleOutside);
+
+    return () => {
+      $(".navToggle").off("click", handleToggle);
+      $(document).off("click", handleOutside);
+    };
   }, []);
 
   return null;

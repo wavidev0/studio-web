@@ -53,7 +53,7 @@ const Recharge = () => {
   const [endDate, setEndDate] = useState("ALL");
   const [status, setStatus] = useState<string>("ALL");
 
-  const cur = setting?.currencySymbol || "$";
+  const cur = setting?.currencySymbol || '₹';
 
   useEffect(() => {
     dispatch(getRechargeRequest({ startDate, endDate, status }));
@@ -138,7 +138,7 @@ const Recharge = () => {
     {
       Header: "Description",
       Cell: ({ row }: { row: RechargeRow }) => {
-        const cfg = txConfig[row?.type];
+        const cfg = txConfig[row?.type ?? 0];
         if (!cfg) return <span>—</span>;
         return (
           <span style={{ background: cfg.bg, color: cfg.color, borderRadius: 20, padding: "4px 12px", fontSize: 12, fontWeight: 600 }}>

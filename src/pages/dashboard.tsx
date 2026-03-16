@@ -68,7 +68,7 @@ const Dashboard = () => {
   const { setting }: any = useSelector((state: RootStore) => state?.setting);
   const router = useRouter();
   const dashboard: any = useSelector((state: RootStore) => state.dashboard);
-  const cur = setting?.currencySymbol || '$';
+  const cur = setting?.currencySymbol || '₹';
 
   useEffect(() => {
     const payload: any = { startDate, endDate };

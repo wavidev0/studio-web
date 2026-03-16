@@ -101,10 +101,10 @@ const Coupon = () => {
       ),
     },
     {
-      Header: `Minimum Amount To Apply (${setting?.currencySymbol || "$"})`,
+      Header: `Minimum Amount To Apply (${setting?.currencySymbol || '₹'})`,
       Cell: ({ row }: { row: CouponData }) => (
         <span className="text-capitalize">
-          {row?.minAmountToApply} {setting?.currencySymbol || "$"}
+          {row?.minAmountToApply} {setting?.currencySymbol || '₹'}
         </span>
       ),
     },

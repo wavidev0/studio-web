@@ -41,7 +41,7 @@ export const signUpAdmin = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "admin/login",
-  async (payload: AllUsersPayload | undefined) => {
+  async (payload: any) => {
     return axios.post("admin/login", payload);
   }
 );

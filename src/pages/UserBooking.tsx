@@ -147,10 +147,10 @@ export default function UserBooking() {
     },
 
     {
-      Header: `Amount(${setting?.currencySymbol || "$"})`,
+      Header: `Amount(${setting?.currencySymbol || '₹'})`,
       Cell: ({ row }: { row: userBookingData }) => (
         <span className="text-capitalize cursor">
-          {row?.amount} {setting?.currencySymbol || "$"}
+          {row?.amount} {setting?.currencySymbol || '₹'}
         </span>
       ),
     },

@@ -46,7 +46,7 @@ const Booking = () => {
   const [endDate, setEndDate] = useState("ALL");
   const [status, setStatus] = useState<string>("ALL");
 
-  const cur = setting?.currencySymbol || "$";
+  const cur = setting?.currencySymbol || '₹';
 
   useEffect(() => {
     dispatch(getAllBookings({ startDate, endDate, status, start: page, limit: rowsPerPage }));
